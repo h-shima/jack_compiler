@@ -1,4 +1,7 @@
 class Tokenizer
+  # NOTE: トークナイザーに関して言えば、トークンを5種類のタグのいずれかで囲むだけ、と考えていいと思う
+  # 文字の並びをトークンに区切る処理が必要かもしれない
+
   def initialize
     # 入力された.jackファイルを開く
     # .jackファイルから空白、コメントを取り除く
@@ -19,7 +22,7 @@ class Tokenizer
     # 現トークンの種類を返す
 
     # 戻り値
-    # KEYWORD, SYMBOL, IDENTIFIER, INT_CONST, STRING_CONST
+    # :KEYWORD, :SYMBOL, :IDENTIFIER, :INT_CONST, :STRING_CONST
   end
 
   def keyword
