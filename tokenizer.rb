@@ -75,8 +75,10 @@ class Tokenizer
   private
 
   # ファイルを1つの文字列ストリームに変換する
+  # TODO: ここから、Square/SquareGame.jackがうまくトークナイズできておらず（他はすべてok）、原因は /** */型のコメントを取り除けていないから
+  # コメントをストリームから取り除く作業から再開する
   def convert_to_stream(file)
-    file.map { |e| e.gsub(/\/\/.*/, '') }
+    text = file.map { |e| e.gsub(/\/\/.*/, '') }
         .map { |e| e.gsub(/\/\*.*\*\//, '') }
         .map { |e| e.gsub(/\n/, '') }
         .map { |e| e.gsub(/\r/, '') }
@@ -84,9 +86,11 @@ class Tokenizer
         .map { |e| e.gsub(/^\s+/, '') }
         .reject(&:empty?)
         .join(' ')
+
+    text.slice!(/\/\*\*(.|\s)*?\*\//)
+    text
   end
 
-  # TODO: このメソッドの修正からやる やりたいことは正しいと思うので、正規表現の修正などを行う。
   # 文字列ストリームを先頭から読んでいき、トークンに分割する
   def divide_into_tokens(stream)
     token_arr = []
