@@ -32,6 +32,18 @@ class CompilationEngine
     end
   end
 
+  def accept_op(token)
+    # opが <> の時、タグがマッチしてしまうのでタグを削除する
+    current_token_without_tag = @current_token.gsub(/^\s*<[^>]*>/, '')
+    current_token_without_tag = current_token_without_tag.gsub(/<[^<]+>\s*$/, '')
+
+    if current_token_without_tag =~ /#{token}/
+      advance
+    else
+      false
+    end
+  end
+
   def expect(token)
     if accept(token)
       true
@@ -301,7 +313,7 @@ class CompilationEngine
 
     compile_term
 
-    while accept('(\+|\-|\*|\/|&|\||\<|\>|\=)')
+    while accept_op('(\+|\-|\*|\/|&|\||\<|\>|\=)')
       write(@prev_token)
 
       compile_term
@@ -339,6 +351,7 @@ class CompilationEngine
         compile_term
       when /identifier/
         # 先読みが必要な式たち
+        # @tokens.firstは<symbol> ; </symbol>のはず
         case @tokens.first     # @current_tokenの次にくるトークン
         when /\[/ # '[' expression ']'
           expect('identifier')
