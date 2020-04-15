@@ -357,11 +357,14 @@ class CompilationEngine
           expect('identifier')
           write(@prev_token)
 
+          expect('\[')
+          write(@prev_token)
+
           compile_expression
 
-          expect('identifier')
+          expect('\]')
           write(@prev_token)
-        when /\(/ # subroutine_call
+        when /\./ # subroutine_call
           compile_subroutine_call
         else # varName単体
           expect('identifier')
