@@ -261,20 +261,20 @@ class CompilationEngine
     write('<whileStatement>')
     write(@prev_token)
 
-    expect('(')
+    expect('\(')
     write(@prev_token)
 
     compile_expression
 
-    expect(')')
+    expect('\)')
     write(@prev_token)
 
-    expect('{')
+    expect('\{')
     write(@prev_token)
 
     compile_statements
 
-    expect('}')
+    expect('\}')
     write(@prev_token)
 
     write('</whileStatement>')
