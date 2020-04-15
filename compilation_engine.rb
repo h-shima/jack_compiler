@@ -333,8 +333,8 @@ class CompilationEngine
       when /stringConstant/
         expect('stringConstant')
         write(@prev_token)
-      when /keywordConstant/
-        expect('keywordConstant')
+      when /(true|false|null|this)/
+        expect('(true|false|null|this)')
         write(@prev_token)
       when /\(/
         expect('\(')
@@ -407,6 +407,7 @@ class CompilationEngine
     write('<expressionList>')
 
     if @current_token =~ /(integerConstant|stringConstant|true|false|null|this|identifier|\(|-|~)/
+
       compile_expression
 
       while accept(',')
