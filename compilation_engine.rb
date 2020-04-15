@@ -398,7 +398,7 @@ class CompilationEngine
 
       compile_expression_list
 
-      expect(')')
+      expect('\)')
       write(@prev_token)
     end
   end
